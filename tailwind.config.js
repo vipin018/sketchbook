@@ -9,7 +9,7 @@ export default {
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
-        serif: ['Crimson Pro', 'serif'],
+        serif: ['Playfair Display', 'serif'],
       },
       colors: {
         accent: '#ff4d00',
