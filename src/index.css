@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@1,300;1,500&family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import 'react-resizable/css/styles.css';
+
+:root, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #fcfcfc;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Subtle Creative Grain Overlay */
+.grain-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  opacity: 0.025;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+}
+
+/* Custom Resize Handle */
+.react-resizable-handle-e {
+  width: 2px;
+  height: 40px;
+  background: rgba(0,0,0,0.1);
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: col-resize;
+  transition: all 0.3s ease;
+  z-index: 40;
+}
+
+.react-resizable-handle-e:hover {
+  background: #ff4d00;
+  height: 80px;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 10px; }
