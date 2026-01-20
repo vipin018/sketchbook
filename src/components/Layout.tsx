@@ -4,6 +4,7 @@ import { Maximize2, ChevronLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 import screenfull from 'screenfull';
 import { Thumbnail } from './Thumbnail';
+import Controls from './Controls';
 
 interface Sketch {
   name: string;
@@ -16,9 +17,11 @@ interface LayoutProps {
   sketches: Sketch[];
   active: string;
   onChange: (sketchName: string) => void;
+  distort: number;
+  onDistortChange: (value: number) => void;
 }
 
-export const Layout = ({ children, sketches, active, onChange }: LayoutProps) => {
+export const Layout = ({ children, sketches, active, onChange, distort, onDistortChange }: LayoutProps) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [width, setWidth] = useState(340); // Local width state for Resizable
 
@@ -112,6 +115,9 @@ export const Layout = ({ children, sketches, active, onChange }: LayoutProps) =>
 
       {/* Main Canvas Area - THIS NOW FILLS THE SCREEN */}
       <main className="relative flex-1 bg-gradient-to-br from-gray-50 to-white h-full overflow-hidden">
+        {active === 'Geometric Flow' && (
+          <Controls distort={distort} onDistortChange={onDistortChange} />
+        )}
         <motion.div
           key={active} // Key change will trigger re-animation
           initial={{ opacity: 0 }}

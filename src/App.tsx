@@ -10,47 +10,62 @@ import CylinderSketch from './sketches/CylinderSketch';
 import DodecahedronSketch from './sketches/DodecahedronSketch';
 import IcosahedronSketch from './sketches/IcosahedronSketch';
 
-const SKETCHES = [
+const SKETCHES_DATA = [
   {
     name: "Metaball Study",
-    component: <SphereSketch />,
+    component: SphereSketch,
     thumbnail: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=800",
   },
   {
     name: "Geometric Flow",
-    component: <BoxSketch />,
+    component: BoxSketch,
     thumbnail: "https://images.unsplash.com/photo-1633167606207-d840b5070fc2?auto=format&fit=crop&q=80&w=800",
   },
   {
     name: "Torus Field",
-    component: <TorusSketch />,
+    component: TorusSketch,
     thumbnail: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&q=80&w=800",
   },
   {
     name: "Radial Cone",
-    component: <ConeSketch />,
+    component: ConeSketch,
     thumbnail: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&q=80&w=800",
   },
   {
     name: "Cylinder Test",
-    component: <CylinderSketch />,
+    component: CylinderSketch,
     thumbnail: "https://images.unsplash.com/photo-1620207418302-439b387441b0?auto=format&fit=crop&q=80&w=800",
   },
   {
     name: "Dodecahedron",
-    component: <DodecahedronSketch />,
+    component: DodecahedronSketch,
     thumbnail: "https://images.unsplash.com/photo-1618556658017-fd9c732d1f60?auto=format&fit=crop&q=80&w=800",
   },
   {
     name: "Icosahedron",
-    component: <IcosahedronSketch />,
+    component: IcosahedronSketch,
     thumbnail: "https://images.unsplash.com/photo-1620121692029-d088224ddc74?auto=format&fit=crop&q=80&w=800",
   },
 ];
 
 function App() {
-  const [current, setCurrent] = useState(SKETCHES[0].name);
+  const [current, setCurrent] = useState(SKETCHES_DATA[0].name);
   const [loading, setLoading] = useState(true);
+  const [distort, setDistort] = useState(0.4);
+
+  const SKETCHES = SKETCHES_DATA.map((sketch) => {
+    if (sketch.name === "Geometric Flow") {
+      return {
+        ...sketch,
+        component: <BoxSketch distort={distort} />,
+      };
+    }
+    const SketchComponent = sketch.component;
+    return {
+      ...sketch,
+      component: <SketchComponent />,
+    };
+  });
 
   useEffect(() => {
     // 3000ms ensures the Preloader animations (counter, columns) 
@@ -61,7 +76,7 @@ function App() {
 
   const currentComponent = useMemo(() => {
     return SKETCHES.find(s => s.name === current)?.component;
-  }, [current]);
+  }, [current, distort]);
 
   return (
     <div className="relative w-full h-screen bg-[#fcfcfc]">
@@ -83,6 +98,8 @@ function App() {
           sketches={SKETCHES} 
           active={current} 
           onChange={setCurrent}
+          distort={distort}
+          onDistortChange={setDistort}
         >
           <AnimatePresence mode="wait">
             <motion.div
